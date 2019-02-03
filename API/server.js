@@ -11,6 +11,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use('/', routes);
 
-app.listen(3000, ()=>{
-    console.log('Swag Shop API running on port 3000...');
+app.listen(3004, ()=>{
+    console.log('Swag Shop API running on port 3004...');
 });
