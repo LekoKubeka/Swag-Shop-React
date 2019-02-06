@@ -1,4 +1,4 @@
-var express = require('express');
+  var express = require('express');
 var router = express.Router();
 
 
@@ -6,6 +6,14 @@ var Product = require('./model/product');
 var WishList = require('./model/wishlist');
 var Cart = require('./model/cart');
 var SaleItem = require('./model/sale-item');
+
+//Allow all requests from all domains & localhost
+router.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "POST, GET");
+  next();
+});
 
 /*creating a product - event emitter*/
 router.post('/product', function(req, res){/* a route*/
