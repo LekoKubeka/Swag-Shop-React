@@ -10,18 +10,36 @@ class App extends Component {
     
     constructor(props){
         super(props); 
+        
+        this.state = {products:[]};
         /*with react you need to bind es6 functions*/
         this.loadData = this.loadData.bind(this);
-        
+        this.productList = this.productList.bind(this);
         this.loadData();
     }
     
     loadData = () =>{ //getProducts is a promise. 
-        http.getProducts().then(products =>{
-            console.log(products);
+        //reference this before the promise is loaded as this refers to the context of the Promise once we are using the Promise. 
+        var self = this; 
+        http.getProducts().then(products_data =>{
+            self.setState({products: products_data}) //setState reloads the component and its children
         }, err => {
             
         });
+        
+   
+    }
+    
+     productList = () => {
+        //create a product
+        const list = this.state.products.map((product)=>
+           <div className = "col-sm-4" key = {product._id}>
+                <Product title={product.title} price={product.price} imgUrl={product.imgUrl}/>
+                
+            </div> 
+        );
+                                             
+            return (list); //brackets because React requires them to render
     }
     
   render() {
@@ -30,8 +48,10 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
         </header>
-        <div className = "App-main">
-                <Product />
+        <div className = "container App-main">
+            <div className = "row">
+               {this.productList()}
+            </div>
         </div>
       </div>
     );
